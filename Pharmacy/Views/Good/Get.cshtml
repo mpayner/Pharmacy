@@ -1,0 +1,86 @@
+﻿@using Pharmacy.Data.Models;
+@using Pharmacy.Data.Utils;
+
+@{
+    ViewData["Title"] = "Get";
+    Layout = "_Layout";
+    DrugPackaging good = (DrugPackaging)ViewBag.Good;
+
+    var categories = good.Category.ExpandAllCategories();
+    var substances = good.Drug.DrugSubstance.OrderByDescending(sub => sub.Quantity);
+}
+
+<section>
+    <div class="content">
+        <ul style="list-style:none;width:100%;display:flex;">
+
+            @foreach(var curCategory in categories)
+            {
+                <li style="padding-right:5px"><a href="/good/@curCategory.Name/1">@curCategory.Name</a> /</li>
+            }
+        </ul>
+    </div>
+    <div class="content">
+      
+        <div style="width:500px">
+            <p><b>Компанія виробник</b><br />@good.Manufacturer.Name</p>
+            <p><b>Опис</b><br/>@ViewBag.Good.Description</p>
+            <p><b>Склад</b></p>
+            <ul>
+                @foreach (var sub in substances)
+                {
+                    <li>@sub.Substance.Name : @(sub.Quantity) мг.</li>
+                }
+            </ul>
+            <p><b>Інструкція</b><br />@good.Drug.Instruction)</p>
+            <p><b>Показання</b><br />@good.Drug.Aindication</p>
+            <p><b>Протипоказання</b><br />@good.Drug.Contraindication</p>
+            <p><b>Побічні ефекти</b><br />@good.Drug.SideEffects)</p>
+
+
+        </div>
+        <div style="width:340px">
+            <img src="@ViewBag.Good.PhotoPath" style="width:100%;">
+            <div style="">
+                <h1 style="font-size:18px">
+
+                    @good.Name @good.Drug.Dose мг.
+                </h1>
+                <p>Кілікість в упаковці: @good.PackQuantity</p>
+                <p>Тип препарату: @good.Drug.Form.Name</p>
+
+                <h6><span class="price">@Math.Round(ViewBag.Good.Price,2)</span> ₴</h6>
+
+                @if (ViewBag.ShowCartButton)
+                {
+                    <div style="width:100%;">
+                        <form action="/addToCart" method="get" class="add_to_cart_form">
+                            <input type="number" name="id" value="@ViewBag.Good.Id" class="id" style="display: none">
+                            <input type="number" value="1" name="quantity" class="quantity" min="1" max="@ViewBag.Good.StorageQuantity" placeholder="К-сть" style="width:50px">
+                            <button type="submit" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <a href="/cart" class="btn btn-primary" style="background:green">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
+                            <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
+                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                        </svg>
+                    </a>
+                }
+
+            </div>
+        </div>
+        
+    </div>
+   
+</section>
+
+
+

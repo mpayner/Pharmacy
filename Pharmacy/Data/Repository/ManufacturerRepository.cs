@@ -1,0 +1,13 @@
+﻿using Pharmacy.Data.Database;
+using Pharmacy.Data.Interfaces;
+using Pharmacy.Data.Models;
+
+namespace Pharmacy.Data.Repository
+{
+    public class ManufacturerRepository : GeneralRepository<Manufacturer>, IManufacturer
+    {
+        public ManufacturerRepository(AppDBContent dBContent) : base(dBContent)
+        {
+        }
+    }
+}

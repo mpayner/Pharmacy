@@ -1,0 +1,88 @@
+﻿@using Pharmacy.Data.Models;
+
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "_Layout";
+    var list = ViewData["Cart"] as IList<ShopCartItem>;
+}
+
+@if (list.Count == 0)
+{
+    <h1 class="text-center">КОШИК ПУСТИЙ</h1>
+}
+else{
+    <table class="table" style="width:1100px; margin:0 auto;">
+        <colgroup>
+            <col width="100" />
+            <col width="300" />
+            <col width="200" />
+            <col width="200" />
+            <col width="200" />
+
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Фото</th>
+                <th>Назва</th>
+                <th>Кількість</th>
+                <th>Ціна за од.</th>
+                <th>Загальна ціна</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in list)
+        {
+            <tr class="shop-cart-item">
+                <td>
+                    <img src="@item.Good.PhotoPath" style="width:100%">
+                </td>
+                <td>
+                    <h2 style="font-size:18px">
+                        <a href="/good/@item.Good.Id">
+                            @item.Good.Name
+                            @if (item.Good.Type().Equals("DrugPackaging"))
+                            {
+                                <span> @(((DrugPackaging)item.Good).Drug.Dose) мг. </span>
+                            }
+                        </a>
+                    </h2>
+                </td>
+                <td>
+                    <form action="/addToCart" method="get" class="cart_form">
+                        <input type="number" id="id" name="id" value="@item.IdGood" style="display: none">
+                        <input type="number" value="@item.Quantity" name="quantity" id="quantity" min="1" max="@item.Good.StorageQuantity" placeholder="К-сть" style="width:50px">                 
+                    </form>
+                </td>
+                <td><span class="price">@Math.Round(item.Price,2)</span> ₴</td>
+                <td><span class="summary_price">@(Math.Round(item.Price * item.Quantity, 2, MidpointRounding.AwayFromZero))</span> ₴</td>
+                <td>
+                    <a href="/deleteFromCart/@item.IdGood" class="cart-delete-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                            </svg>
+                    </a>
+                </td>
+
+            </tr>
+
+        }
+            <tr>
+                <td colspan="3"></td>
+                <td>
+                    <a class="btn btn-primary" href="order/create">ЗАМОВИТИ 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                        </svg>
+                    </a>
+                </td>
+                <td colspan="2">Усього: 
+                    <span id="order-price"></span> ₴
+                </td>
+            
+            </tr>
+        </tbody>
+    </table>
+}

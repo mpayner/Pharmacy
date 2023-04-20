@@ -1,0 +1,152 @@
+#page-list{
+    width: 100%;
+}
+
+#page-list ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background:#eee;
+    width:400px;
+    margin:0 auto;
+    background:#eee;
+    padding:10px;
+    margin-bottom:20px;
+    border-radius:20px
+}
+
+#page-list ul li{
+    display: block;
+    list-style: none;
+    margin: 0px 10px;
+}
+
+
+/*.good, .order {
+    width: 300px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2);
+    background: #fafafa;
+}*/
+
+.order {
+    width: 600px;
+}
+
+.items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: stretch;
+}
+
+
+
+.delete-button, .edit-button {
+    text-decoration: none;
+    font-size: 14px;
+    display: none;
+    text-align: center;
+    height: 30px;
+    width: 30px;
+    padding-top: 3px;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.adminMenu input[type="radio"] {
+    display: none;
+}
+
+.adminMenu label {
+    width: 300px;
+    background: #ff8700;
+    color: #fff;
+    font-size: 25px;
+    text-align: center;
+    padding: 10px;
+}
+
+div:hover .delete-button, div:hover .edit-button {
+    display: block;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap:wrap;
+    padding:20px;
+}
+
+
+.content {
+    width: 900px;
+    display: flex;
+    flex-direction: row;
+    padding:15px;
+    justify-content: center;
+
+    background:#eee;
+    flex-wrap:wrap;
+}
+
+.content div:nth-child(2) img{
+    margin-bottom:20px;
+}
+
+.cart-delete-button{
+    display:none;
+}
+
+.shop-cart-item:hover .cart-delete-button {
+    display: block;
+}
+
+#category-links{
+    display:flex;
+    list-style:none;
+}
+
+#category-links a {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background: #1779f2;
+    color: white;
+    font-size: 18px
+}
+
+#category-links a {
+    text-decoration: none;
+}
+
+#category-links a:hover {
+    background: #2465b7;
+}
+
+#cart-items-counter {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    margin: -20px 0 0 35px;
+    background: #e42727;
+    border-radius: 50%;
+    text-align: center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff
+}
